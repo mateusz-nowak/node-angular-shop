@@ -1,0 +1,53 @@
+<html ng-app="app">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <title>nodeShop - sklep komputerowy</title>
+    <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/stylesheets/shared.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+    <script src="http://code.angularjs.org/1.2.9/angular-route.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/javascripts/application.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="pull-right">
+                <a class="btn btn-info" href="/auth">Zaloguj</a>
+            </div>
+            <img src="http://stevenjobsdead.com/wp-content/uploads/dedb3__apple-inc-logo.jpg" alt="Apple logo inc" class="header-logo pull-left" />
+            <h1><a href="#/">nodeShop</a></h1>
+            <big>sklep komputerowy</big>
+        </header>
+        <div class=" content-separator clearfix"></div>
+        <section class="content-section">
+            <div class="row">
+                <div class="col-md-3" ng-controller="SidebarCategoryController">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="panel-title">Kategorie ({{ categories.length }})</div>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="menu-sidebar-section">
+                                <li ng-repeat="category in categories"><a href="#/category/{{ category.id }}" class="btn">{{ category.name }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="panel-title">Wyszukiwanie zaawansowane</div>
+                        </div>
+                        <div class="panel-body">
+                            ... /// 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9" ng-view></div>
+            </div>
+        </section>
+        <footer class="text--right">
+            All Rights reserved &copy; 2014R
+        </footer>
+    </div>
+</body>
+</html>
