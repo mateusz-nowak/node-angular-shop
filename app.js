@@ -27,8 +27,8 @@ app.configure(function() {
     app.use(express.static(__dirname + '/public'));
 
     passport.use(new facebookStrategy({
-        clientID: '142049985936355',
-        clientSecret: '234a87f93c83dc7d34503245c674376d',
+        clientID: '',
+        clientSecret: '',
         callbackURL: "http://localhost:3000/auth/facebook/callback"
     }, function(accessToken, refreshToken, profile, done) {
                 
