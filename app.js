@@ -37,8 +37,6 @@ app.configure(function() {
 
 var connection = mysql.createConnection(config.database);
 
-
-// Connect
 connection.connect(function(error) {
     // Read all controllers
     fs.readdirSync('./src/controllers').forEach(function (file) {
