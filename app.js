@@ -3,7 +3,7 @@ var express = require('express'),
     fs = require('fs'),
     app = express(),
     passport = require('passport'),
-    facebookStrategy = require('passport-facebook').Strategy,
+    googleStrategy = require('passport-google').Strategy,
     config = require('./config.js'),
     mysql = require('mysql');
 
@@ -18,6 +18,8 @@ app.configure(function() {
     app.use(express.session({
         secret: 'secret-hash'
     }));
+    app.use(passport.initialize());
+    app.use(passport.session());
     app.use(app.router);
     app.use(require('less-middleware')({
         src: __dirname + '/src/assets/less',
@@ -26,13 +28,16 @@ app.configure(function() {
         compress: true
     }));
     app.use(express.static(__dirname + '/public'));
-    passport.use(new facebookStrategy({
-        clientID: config.facebook.clientID,
-        clientSecret: config.facebook.clientSecret,
-        callbackURL: config.facebook.callbackURL
-    }, function(accessToken, refreshToken, profile, done) {
-        // TODO
+
+    passport.use(new googleStrategy(config.googleAuth, function(identifier, profile, done) {
+        return done(null, profile);
     }));
+    passport.serializeUser(function(user, done) {
+        return done(null, user);
+    });
+    passport.deserializeUser(function(user, done) {
+        return done(null, user);
+    });
 });
 
 var connection = mysql.createConnection(config.database);

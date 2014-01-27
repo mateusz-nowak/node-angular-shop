@@ -13,7 +13,12 @@
     <div class="container">
         <header>
             <div class="pull-right">
+            <% if (isAuthenticated) { %>
+                <span class="login-displayName"><strong>Zalogowany jako</strong>: <%= user.displayName %></span> 
+                <a class="btn btn-info" href="/auth/logout">Wyloguj</a>
+            <% } else { %>
                 <a class="btn btn-info" href="/auth">Zaloguj</a>
+            <% } %>
             </div>
             <img src="http://stevenjobsdead.com/wp-content/uploads/dedb3__apple-inc-logo.jpg" alt="Apple logo inc" class="header-logo pull-left" />
             <h1><a href="#/">nodeShop</a></h1>

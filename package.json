@@ -9,7 +9,7 @@
     "express": "3.4.8",
     "ejs": "*",
     "passport": "*",
-    "passport-facebook": "*",
+    "passport-google": "*",
     "less-middleware": "*",
     "mysql": "*"
   }
