@@ -1,0 +1,15 @@
+<form role="form">
+    <div class="form-group">
+        <label for="search-product-name">Nazwa</label>
+        <input type="text" class="form-control" id="search-productname" ng-model="searchProduct.name"/>
+    </div>
+    <div class="form-group">
+        <label for="search-product-price-min">Cena minimalna [PLN]</label>
+        <input type="text" class="form-control" id="search-product-price-min" ng-model="searchProduct.price.min"/>
+    </div>
+    <div class="form-group">
+        <label for="search-product-price-max">Cena maksymalna [PLN]</label>
+        <input type="text" class="form-control" id="search-product-price-max" ng-model="searchProduct.price.max"/>
+    </div>
+    <button type="submit" class="btn btn-default" ng-click="searchProducts()">Szukaj</button>
+</form>

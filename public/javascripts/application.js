@@ -1,12 +1,18 @@
 var app = angular.module('app', ['ngRoute']);
 
-app.controller('SidebarCategoryController', function($scope, $http) {
+app.controller('SidebarCategoryController', function($scope, $http, $location) {
     $scope.categories = [];
+    $scope.searchProduct = {};
 
     $http.get('/categories')
         .success(function(categories) {
             $scope.categories = categories;
         });
+
+    $scope.searchProducts = function() {
+        localStorage.setItem('searchProductProperties', JSON.stringify($scope.searchProduct));
+        $location.path('/products/search');
+    };
 });
 
 app.controller('ProductListController', function($scope, $routeParams, $http) {
@@ -33,6 +39,15 @@ app.controller('ProductDetailController', function($scope, $routeParams, $http) 
         });
 });
 
+app.controller('ProductSearchController', function($scope, $routeParams, $http) {
+    $scope.products = [];
+
+    $http.post('/products/search', JSON.parse(localStorage.getItem('searchProductProperties')))
+        .success(function(products) {
+            $scope.products = products;
+        });
+});
+
 app.controller('MainController', function($scope, $http) {
     $scope.products = [];
 
@@ -51,6 +66,10 @@ app.config(['$routeProvider', function($routeProvider) {
         when('/product/:id', {
             templateUrl: 'javascripts/templates/product-detail.html',
             controller: 'ProductDetailController'
+        }).
+        when('/products/search', {
+            templateUrl: 'javascripts/templates/product-search.html',
+            controller: 'ProductSearchController'
         }).
         otherwise({
             templateUrl: 'javascripts/templates/main.html',
