@@ -10,6 +10,7 @@
     "ejs": "*",
     "passport": "*",
     "passport-facebook": "*",
-    "less-middleware": "*"
+    "less-middleware": "*",
+    "mysql": "*"
   }
 }

@@ -4,7 +4,8 @@ var express = require('express'),
     app = express(),
     passport = require('passport'),
     facebookStrategy = require('passport-facebook').Strategy,
-    config = require('./config.js');
+    config = require('./config.js'),
+    mysql = require('mysql');
 
 app.configure(function() {
     app.set('views', __dirname + '/src/views');
@@ -25,7 +26,6 @@ app.configure(function() {
         compress: true
     }));
     app.use(express.static(__dirname + '/public'));
-
     passport.use(new facebookStrategy({
         clientID: config.facebook.clientID,
         clientSecret: config.facebook.clientSecret,
@@ -35,13 +35,18 @@ app.configure(function() {
     }));
 });
 
-// Read all controllers
-fs.readdirSync('./src/controllers').forEach(function (file) {
-    if (file.substr(-3) == '.js') {
-        route = require('./src/controllers/' + file);
-        route.controller(app);
-    }
-});
+var connection = mysql.createConnection(config.database);
 
-// Server listener
-http.createServer(app).listen(3000);
+
+// Connect
+connection.connect(function(error) {
+    // Read all controllers
+    fs.readdirSync('./src/controllers').forEach(function (file) {
+        if (file.substr(-3) == '.js') {
+            route = require('./src/controllers/' + file);
+            route.controller(app, connection);
+        }
+    });
+
+    http.createServer(app).listen(3000);
+});
