@@ -1,4 +1,16 @@
-<h1>Product details.</h1>
-<p>
-    Hello world
-</p>
+<blockquote>
+  <p>Product</p>
+  <small>{{ product.name }}</small>
+</blockquote>
+
+<div class="row">
+    <div class="col-lg-8">
+        {{ product.description }}
+    </div>
+    <div class="col-lg-4">
+       <img ng-src="/images/products/{{ product.id }}.jpg" alt="{{ product.name }}" class="img-responsive" /> 
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<a class="btn btn-primary" href="#/product/{{ product.id }}/cart">Dodaj do koszyka</a>

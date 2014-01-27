@@ -5,6 +5,12 @@ module.exports.controller = function(app, mysql) {
         })
     });
 
+    app.get('/products/:id', function(req, res) {
+        mysql.query('SELECT * FROM products WHERE id = ?', [ req.params.id ], function(err, results) {
+            res.send(200, results[0]);
+        })
+    });
+
     app.get('/categories/:id/products', function(req, res) {
         mysql.query('SELECT * FROM products WHERE category_id = ? ORDER BY id DESC', [ req.params.id ], function(err, results) {
             res.send(200, results);
