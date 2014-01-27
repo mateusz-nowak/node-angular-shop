@@ -1,11 +1,11 @@
-var express = require('express');
-var http = require('http');
-var fs = require('fs');
-var app = express();
-var passport = require('passport');
-var facebookStrategy = require('passport-facebook').Strategy;
+var express = require('express'),
+    http = require('http'),
+    fs = require('fs'),
+    app = express(),
+    passport = require('passport'),
+    facebookStrategy = require('passport-facebook').Strategy,
+    config = require('./config.js');
 
-// Basic configuration
 app.configure(function() {
     app.set('views', __dirname + '/src/views');
 
@@ -27,11 +27,11 @@ app.configure(function() {
     app.use(express.static(__dirname + '/public'));
 
     passport.use(new facebookStrategy({
-        clientID: '',
-        clientSecret: '',
-        callbackURL: "http://localhost:3000/auth/facebook/callback"
+        clientID: config.facebook.clientID,
+        clientSecret: config.facebook.clientSecret,
+        callbackURL: config.facebook.callbackURL
     }, function(accessToken, refreshToken, profile, done) {
-                
+        // TODO
     }));
 });
 
