@@ -10,12 +10,17 @@ app.controller('SidebarCategoryController', function($scope, $http) {
 });
 
 app.controller('ProductListController', function($scope, $routeParams, $http) {
-    $scope.category = $routeParams.id;
     $scope.products = [];
+    $scope.category = [];
     
-    $http.get('/categories/' + $scope.category + '/products')
+    $http.get('/categories/' + $routeParams.id + '/products')
         .success(function(products) {
             $scope.products = products;
+        });
+
+    $http.get('/categories/' + $routeParams.id)
+        .success(function(category) {
+            $scope.category = category;
         });
 });
 
@@ -26,7 +31,7 @@ app.controller('ProductDetailController', function($scope, $http) {
 app.controller('MainController', function($scope, $http) {
     $scope.products = [];
 
-    $http.get('/categories/1/products')
+    $http.get('/products')
         .success(function(products) {
             $scope.products = products;
         });
