@@ -15,6 +15,9 @@
             <div class="pull-right">
             <% if (isAuthenticated) { %>
                 <span class="login-displayName"><strong>Zalogowany jako</strong>: <%= user.displayName %></span> 
+                <% if (isAdmin) { %>
+                    <a class="btn btn-primary" href="#/admin">Admin</a>
+                <% } %>
                 <a class="btn btn-info" href="/auth/logout">Wyloguj</a>
             <% } else { %>
                 <a class="btn btn-info" href="/auth">Zaloguj</a>

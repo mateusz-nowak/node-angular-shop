@@ -6,6 +6,7 @@
 <div class="row">
     <div class="col-lg-8">
         {{ product.description }}
+        <p class="lead">{{ product.price / 100 }} PLN</p>
     </div>
     <div class="col-lg-4">
        <img ng-src="/images/products/{{ product.id }}.jpg" alt="{{ product.name }}" class="img-responsive" /> 
