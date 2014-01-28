@@ -8,6 +8,6 @@ module.exports = {
         'user': '',
         'password': '',
         'database': '',
-        'debug': true 
+        'debug': true
     }
 }
