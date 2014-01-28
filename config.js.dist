@@ -1,0 +1,13 @@
+module.exports = {
+    'googleAuth': {
+        returnURL: 'http://localhost:3000/auth/result',
+        realm: 'http://localhost:3000/'
+    },
+    'database': {
+        'host': '',
+        'user': '',
+        'password': '',
+        'database': '',
+        'debug': true
+    }
+}
