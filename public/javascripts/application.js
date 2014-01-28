@@ -11,7 +11,7 @@ app.controller('SidebarCategoryController', function($scope, $http, $location) {
 
     $scope.searchProducts = function() {
         localStorage.setItem('searchProductProperties', JSON.stringify($scope.searchProduct));
-        $location.path('/products/search');
+        $location.path('/products/search/' + Math.floor((Math.random() * 10000)));
     };
 });
 
@@ -106,7 +106,7 @@ app.config(['$routeProvider', function($routeProvider) {
             templateUrl: 'javascripts/templates/product-detail.html',
             controller: 'ProductDetailController'
         }).
-        when('/products/search', {
+        when('/products/search/:rand', {
             templateUrl: 'javascripts/templates/product-search.html',
             controller: 'ProductSearchController'
         }).
