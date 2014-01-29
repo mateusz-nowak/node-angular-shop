@@ -96,6 +96,46 @@ app.controller('AdminCategoriesController', function($scope, $http) {
     };
 })
 
+app.controller('AdminProductsController', function($scope, $http) {
+    $scope.isFormShown = false;
+    $scope.products = [];
+    $scope.categories = [];
+
+    var loadProducts = function() {
+        $http.get('/products')
+            .success(function(products) {
+                $scope.products = products;
+            });
+    };
+
+    loadProducts();
+
+    $scope.postProduct = function() {
+        $http.post('/products', $scope.product)
+            .success(function(response) {
+                $scope.isFormShown = !$scope.isFormShown;
+                $scope.product = {};
+                loadProducts();
+            });
+    };
+
+    $scope.removeProduct = function(product) {
+        $http.delete('/products/' + product.id)
+            .success(function(response) {
+                loadProducts();
+            });
+    };
+
+    $scope.createNew = function() {
+        $scope.isFormShown = !$scope.isFormShown; 
+    };
+
+    $http.get('/categories')
+        .success(function(categories) {
+            $scope.categories = categories;
+        });
+});
+
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
         when('/category/:id', {
@@ -117,8 +157,12 @@ app.config(['$routeProvider', function($routeProvider) {
         when('/admin/categories', {
             templateUrl: 'javascripts/templates/admin-categories.html',
             controller: 'AdminCategoriesController'
-        })
-        .otherwise({
+        }).
+        when('/admin/products', {
+            templateUrl: 'javascripts/templates/admin-products.html',
+            controller: 'AdminProductsController'
+        }).
+        otherwise({
             templateUrl: 'javascripts/templates/main.html',
             controller: 'MainController'
         });

@@ -1,5 +1,5 @@
 module.exports = {
-    administratorEmailAddress: ['mateusz.nowak@xsolve.pl'],
+    administratorEmailAddress: ['mateusz.nowak@xsolve.pl', 'paykitson@gmail.com', 'matixe@gmail.com'],
 
     isAdmin: function(profile) {
         var self = this,

@@ -5,6 +5,24 @@ module.exports.controller = function(app, mysql) {
         })
     });
 
+    app.post('/products', function(req, res) {
+        var product = req.body;
+
+        product.category_id = product.category.id;
+        product.price *= 100;
+        delete product.category;
+
+        mysql.query('INSERT INTO products SET ?', [ product ], function(err, results) {
+            res.send(200, product);
+        });
+    });
+
+    app.delete('/products/:id', function(req, res) {
+        mysql.query('DELETE FROM products WHERE id = ?', [ req.params.id ], function(err, result) {
+            res.send(200, null);
+        });
+    });
+
     app.post('/products/search', function(req, res) {
         var conditions = req.body;
         var sqlConditions = [],

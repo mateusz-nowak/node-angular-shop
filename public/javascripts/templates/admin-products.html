@@ -1,0 +1,55 @@
+<div class="action-container">
+    <a ng-click="createNew()" href="#/admin/products" ng-show="!isFormShown" class="btn btn-warning">Dodaj nowy produkt</a>
+    <a ng-click="createNew()" href="#/admin/products" ng-show="isFormShown" class="btn btn-warning">Lista produktów</a>
+</div>
+
+<table class="table" ng-show="!isFormShown">
+    <tr>
+        <th class="admin-product-image">#</th>
+        <th>Nazwa produktu</th>
+        <th>Cena</th>
+        <th class="text--right">Akcje</th>
+    </tr>
+    <tr ng-repeat="product in products">
+        <td class="admin-product-image">
+            <img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}" class="img-responsive" /> 
+        </td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price / 100 }} PLN</td>
+        <td class="text--right">
+            <a ng-click="editProduct(product)" class="btn btn-primary">Edytuj</a>
+            <a ng-click="removeProduct(product)" class="btn btn-danger">Usuń</a>
+        </td>
+    </tr>
+</table>
+
+<div class="form-add-container col-lg-4" ng-show="isFormShown">
+    <form method="POST" name="formAddProduct">
+        <div class="form-group">
+            <label for="product-name">Nazwa produktu</label>
+            <input ng-minlength="3" id="product-name" name="productName" type="text" ng-model="product.name" class="form-control" required />
+            <span class="form-error" ng-show="!formAddProduct.productName.$valid">Nazwa musi mieć conajmniej 3 znaki!</span>
+        </div>
+        <div class="form-group">
+            <label for="product-description">Opis produktu</label>
+            <textarea ng-minlength="3" id="product-description" name="productDescription" ng-model="product.description" class="form-control" rows="5" cols="15" required></textarea>
+            <span class="form-error" ng-show="!formAddProduct.productDescription.$valid">Opis musi mieć conajmniej 3 znaki!</span>
+        </div>
+        <div class="form-group">
+            <label for="product-category">Kategoria</label>
+            <select ng-options="c.name for c in categories" id="product-category" name="productCategory" type="text" ng-model="product.category" class="form-control" required></select>
+            <span class="form-error" ng-show="!formAddProduct.productCategory.$valid">Wybierz kategorię!</span>
+        </div>
+        <div class="form-group">
+            <label for="product-thumbnail">Miniaturka [URL]</label>
+            <input id="product-thumbnail" name="productThumbnail" type="url" ng-model="product.thumbnail" class="form-control" required />
+            <span class="form-error" ng-show="!formAddProduct.productThumbnail.$valid">Niepoprawny adres zdjęcia!</span>
+        </div>
+        <div class="form-group">
+            <label for="product-price">Cena [PLN]</label>
+            <input ng-minlength="1" ng-pattern="/^\d+$/" id="product-price" name="productPrice" type="text" ng-model="product.price" class="form-control" required />
+            <span class="form-error" ng-show="!formAddProduct.productPrice.$valid">Podaj kwotę</span>
+        </div>
+        <button ng-click="postProduct()" ng-show="formAddProduct.$valid" type="submit" class="btn btn-default">Dodaj</button>
+    </form>
+</div>
