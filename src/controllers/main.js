@@ -7,7 +7,7 @@ module.exports.controller = function(app) {
             user: req.user,
             isAdmin: authManager.isAdmin(req.user)
         });
-    })
+    });
     
     app.use(function(req, res) {
         res.status(400);

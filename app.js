@@ -3,7 +3,6 @@ var express = require('express'),
     fs = require('fs'),
     app = express(),
     passport = require('passport'),
-    googleStrategy = require('passport-google').Strategy,
     config = require('./config.js'),
     mysql = require('mysql');
 
@@ -17,7 +16,7 @@ app.configure(function() {
     app.use(express.cookieParser());
     app.use(express.session({
         secret: 'secret-hash',
-        expires: new Date(Date.now() + 60 * 10000), 
+        expires: new Date(Date.now() + 60 * 10000),
         maxAge: 60*10000
     }));
     app.use(passport.initialize());
@@ -30,22 +29,11 @@ app.configure(function() {
         compress: true
     }));
     app.use(express.static(__dirname + '/public'));
-
-    passport.use(new googleStrategy(config.googleAuth, function(identifier, profile, done) {
-        return done(null, profile);
-    }));
-    passport.serializeUser(function(user, done) {
-        return done(null, user);
-    });
-    passport.deserializeUser(function(user, done) {
-        return done(null, user);
-    });
 });
 
 var connection = mysql.createConnection(config.database);
 
 connection.connect(function(error) {
-    // Read all controllers
     fs.readdirSync('./src/controllers').forEach(function (file) {
         if (file.substr(-3) == '.js') {
             route = require('./src/controllers/' + file);

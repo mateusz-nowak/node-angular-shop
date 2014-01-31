@@ -2,7 +2,7 @@ module.exports.controller = function(app, mysql) {
     app.get('/products', function(req, res) {
         mysql.query('SELECT * FROM products ORDER BY id DESC LIMIT 10', function(err, results) {
             res.send(200, results);
-        })
+        });
     });
 
     app.post('/products', function(req, res) {
@@ -45,13 +45,13 @@ module.exports.controller = function(app, mysql) {
 
         mysql.query('SELECT * FROM products WHERE ' + sqlConditions.join(' AND '), sqlConditionsFlatten, function(err, results) {
             res.send(200, results);
-        })
+        });
     });
 
     app.get('/products/:id', function(req, res) {
         mysql.query('SELECT * FROM products WHERE id = ?', [ req.params.id ], function(err, results) {
             res.send(200, results[0]);
-        })
+        });
     });
 
     app.get('/categories/:id/products', function(req, res) {
