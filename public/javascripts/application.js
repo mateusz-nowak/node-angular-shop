@@ -1,12 +1,25 @@
 var app = angular.module('app', ['ngRoute']);
 
-app.controller('SidebarCategoryController', function($scope, $http, $location) {
-    $scope.categories = [];
-    $scope.searchProduct = {};
+app.factory('CommonDataProvider', function($http) {
+    return {
+        categories: [],
 
-    $http.get('/categories')
-        .success(function(categories) {
-            $scope.categories = categories;
+        fetchCategories: function() {
+            var self = this;
+            return $http.get('/categories')
+                .success(function(categories) {
+                    self.categories = categories;
+                });
+        },
+
+    };
+});
+
+app.controller('SidebarCategoryController', function($scope, $http, $location, CommonDataProvider) {
+    CommonDataProvider
+        .fetchCategories()
+        .then(function(categories) {
+            $scope.categories = CommonDataProvider.categories;
         });
 
     $scope.searchProducts = function() {
@@ -16,9 +29,6 @@ app.controller('SidebarCategoryController', function($scope, $http, $location) {
 });
 
 app.controller('ProductListController', function($scope, $routeParams, $http) {
-    $scope.products = [];
-    $scope.category = {};
-    
     $http.get('/categories/' + $routeParams.id + '/products')
         .success(function(products) {
             $scope.products = products;
@@ -31,8 +41,6 @@ app.controller('ProductListController', function($scope, $routeParams, $http) {
 });
 
 app.controller('ProductDetailController', function($scope, $routeParams, $http) {
-    $scope.product = {};
-
     $http.get('/products/' + $routeParams.id)
         .success(function(product) {
             $scope.product = product;
@@ -40,8 +48,6 @@ app.controller('ProductDetailController', function($scope, $routeParams, $http) 
 });
 
 app.controller('ProductSearchController', function($scope, $routeParams, $http) {
-    $scope.products = [];
-
     $http.post('/products/search', JSON.parse(localStorage.getItem('searchProductProperties')))
         .success(function(products) {
             $scope.products = products;
@@ -49,8 +55,6 @@ app.controller('ProductSearchController', function($scope, $routeParams, $http) 
 });
 
 app.controller('MainController', function($scope, $http) {
-    $scope.products = [];
-
     $http.get('/products')
         .success(function(products) {
             $scope.products = products;
@@ -61,18 +65,16 @@ app.controller('AdminDashboardController', function($scope, $http) {
     // Nothing yet here.
 });
 
-app.controller('AdminCategoriesController', function($scope, $http) {
+app.controller('AdminCategoriesController', function($scope, $http, CommonDataProvider) {
     var loadCategories = function() {
-        $http.get('/categories')
-            .success(function(categories) {
-                $scope.categories = categories;
+        CommonDataProvider
+            .fetchCategories()
+            .then(function(categories) {
+                $scope.categories = CommonDataProvider.categories;
             });
     };
 
-    $scope.categories = [];
-    $scope.category = {};
     $scope.isFormShown = false;
-
     loadCategories();
 
     $scope.removeCategory = function(categoryId) {
@@ -83,7 +85,7 @@ app.controller('AdminCategoriesController', function($scope, $http) {
     };
 
     $scope.createNew = function() {
-        $scope.isFormShown = !$scope.isFormShown; 
+        $scope.isFormShown = !$scope.isFormShown;
     };
 
     $scope.postNewCategory = function() {
@@ -92,9 +94,9 @@ app.controller('AdminCategoriesController', function($scope, $http) {
                 loadCategories();
                 $scope.isFormShown = false;
                 $scope.category = {};
-            }); 
+            });
     };
-})
+});
 
 app.controller('AdminProductsController', function($scope, $http) {
     $scope.isFormShown = false;
@@ -127,7 +129,7 @@ app.controller('AdminProductsController', function($scope, $http) {
     };
 
     $scope.createNew = function() {
-        $scope.isFormShown = !$scope.isFormShown; 
+        $scope.isFormShown = !$scope.isFormShown;
     };
 
     $http.get('/categories')
