@@ -1,15 +1,18 @@
 <blockquote>
-  <p>Product</p>
-  <small>{{ product.name }}</small>
+    <p>{{ product.name }}</p>
+    <small>szczególy produktu</small>
+    <big class="btn btn-success pull-right text--right product-defail-price">
+        {{ product.price / 100 }} PLN
+    </big>
 </blockquote>
+<div class="clearfix"></div>
 
-<div class="row">
+<div class="row product-details">
     <div class="col-lg-8">
         {{ product.description }}
-        <p class="lead">{{ product.price / 100 }} PLN</p>
     </div>
     <div class="col-lg-4">
-       <img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}" class="img-responsive" /> 
+       <img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}" class="img-responsive" />
     </div>
     <div class="clearfix"></div>
 </div>

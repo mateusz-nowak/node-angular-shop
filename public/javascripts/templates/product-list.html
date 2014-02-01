@@ -5,11 +5,9 @@
 
 <div class="row">
     <div class="col-md-4" ng-repeat="product in products">
-        <img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}" class="img-responsive" /> 
-        <h5 class="lead"><a class="btn" href="#/product/{{ product.id }}">{{ product.name }}</a></h5>
+        <img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}" class="img-responsive" />
+        <h5 class="lead caps"><a class="btn" href="#/product/{{ product.id }}">{{ product.name }}</a></h5>
         <div class="clearfix"></div>
-        <small>{{ product.description }}</small>
-        <div class="text--right">{{ product.price / 100 }} PLN</div>
     </div>
 </div>
 <div ng-show="products.length == 0" class="alert alert-info">Niestety, w tej kategorii nie ma żadnych produktów jeszcze.</div>
