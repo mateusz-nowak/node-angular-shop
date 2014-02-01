@@ -1,6 +1,6 @@
 module.exports.controller = function(app, mysql) {
     app.get('/categories', function(req, res) {
-        mysql.query('SELECT * FROM categories', function(err, results) {
+        mysql.query('SELECT *, (SELECT COUNT(*) FROM products AS p WHERE p.category_id = c.id) as productCount FROM categories AS c', function(err, results) {
             res.send(200, results);
         });
     });

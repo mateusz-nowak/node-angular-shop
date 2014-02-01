@@ -37,7 +37,11 @@
                         </div>
                         <div class="panel-body">
                             <ul class="menu-sidebar-section">
-                                <li ng-repeat="category in categories"><a href="#/category/{{ category.id }}" class="btn">{{ category.name }}</a></li>
+                                <li ng-repeat="category in categories">
+                                    <a href="#/category/{{ category.id }}" class="btn">
+                                        {{ category.name }} <span class="label-product-count">({{ category.productCount }})</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>

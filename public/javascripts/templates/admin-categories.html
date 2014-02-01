@@ -6,13 +6,15 @@
 <table class="table" ng-show="!isFormShown">
     <tr>
         <th>Nazwa kategorii</th>
-        <th>Akcje</th>
+        <th class="text--right">Akcje</th>
+        <th class="table-product-count text--right">Ilość produktów</th>
     </tr>
     <tr ng-repeat="category in categories">
         <td>{{ category.name }}</td>
-        <td>
+        <td class="text--right">
             <a ng-click="removeCategory(category.id)" class="btn btn-danger">Usuń</a>
         </td>
+        <td class="table-product-count text--right">{{ category.productCount }}</td>
     </tr>
 </table>
 
