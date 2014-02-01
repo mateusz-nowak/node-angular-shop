@@ -1,0 +1,23 @@
+<blockquote>
+    <p>Koszyk</p>
+</blockquote>
+
+<div class="row">
+    <table class="col-md-4 table-bordered">
+        <tr>
+            <th>Id produktu</th>
+            <th>Nazwa produktu</th>
+            <th>Cena produktu</th>
+            <th>Opiss</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="product in products">
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.description }}</td>
+            <td><a ng-click="removeCart(product.id)" href="/cart/remove" class="btn btn-danger">Usuń</a></td>
+        </tr>
+    </table>
+</div>
+<div ng-show="products.length == 0" class="alert alert-info">Niestety, nie dodano jeszcze żadnych produktów do koszyka.</div>
