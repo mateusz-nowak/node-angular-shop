@@ -14,7 +14,7 @@
         <header>
             <div class="pull-right">
             <% if (isAuthenticated) { %>
-                <span class="login-displayName"><strong>Zalogowany jako</strong>: <%= user.displayName %></span> 
+                <span class="login-displayName"><strong>Zalogowany jako</strong>: <%= user.displayName %></span>
                 <% if (isAdmin) { %>
                     <a class="btn btn-primary" href="#/admin">Admin</a>
                 <% } %>
@@ -27,7 +27,7 @@
             <h1><a href="#/">nodeShop</a></h1>
             <big>sklep komputerowy</big>
         </header>
-        <div class=" content-separator clearfix"></div>
+        <div class="content-separator clearfix"></div>
         <section class="content-section">
             <div class="row">
                 <div class="col-md-3" ng-controller="SidebarCategoryController">

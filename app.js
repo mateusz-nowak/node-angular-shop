@@ -8,7 +8,6 @@ var express = require('express'),
 
 app.configure(function() {
     app.set('views', __dirname + '/src/views');
-
     app.use(express.json());
     app.use(express.bodyParser());
     app.use(express.urlencoded());
