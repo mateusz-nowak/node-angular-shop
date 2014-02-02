@@ -11,7 +11,9 @@
     "passport": "*",
     "passport-google": "*",
     "less-middleware": "*",
-    "mysql": "*"
+    "mysql": "*",
+    "commander": "~2.1.0",
+    "grunt-exec": "~0.4.3"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
