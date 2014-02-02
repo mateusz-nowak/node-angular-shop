@@ -14,6 +14,8 @@ var passport = require('passport'),
     };
 
 module.exports.controller = function(app) {
+    var authManager = require('../services/authManager.js');
+
     passportConfig(passport);
 
     // GET /auth
@@ -24,6 +26,12 @@ module.exports.controller = function(app) {
         successRedirect: '/',
         failureRedirect: '/login'
     }));
+
+    app.get('/auth/admin', function(req, res) {
+        res.send(200, {
+            isAdmin: authManager.isAdmin(req.user)
+        });
+    });
 
     // GET /auth/logout
     app.get('/auth/logout', function(req, res) {

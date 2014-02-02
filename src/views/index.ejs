@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <header>
-            <div class="pull-right">
+            <div class="container-auth pull-right">
                 <% if (isAuthenticated) { %>
                     <span class="login-displayName"><strong>Zalogowany jako</strong>: <%= user.displayName %></span>
                     <% if (isAdmin) { %>
@@ -20,6 +20,9 @@
                             <span class="glyphicon glyphicon-list-alt"></span> Admin
                         </a>
                     <% } %>
+                    <a class="btn btn-info" href="/#/cart">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Koszyk
+                    </a>
                     <a class="btn btn-info" href="/auth/logout">
                         <span class="glyphicon glyphicon-remove"></span> Wyloguj
                     </a>
@@ -29,9 +32,10 @@
                     </a>
                 <% } %>
             </div>
-            <img src="http://stevenjobsdead.com/wp-content/uploads/dedb3__apple-inc-logo.jpg" alt="Apple logo inc" class="header-logo pull-left" />
-            <h1><a href="#/">nodeShop</a></h1>
-            <big class="caps">sklep komputerowy</big>
+            <a href="#/home">
+                <img src="http://blog.redradix.com/wp-content/uploads/2013/07/Node.png" alt="Apple logo inc" class="header-logo pull-left" />
+            </a>
+            <div class="clearfix"></div>
         </header>
         <div class="content-separator clearfix"></div>
         <section class="content-section">

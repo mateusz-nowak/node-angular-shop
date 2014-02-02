@@ -1,3 +1,5 @@
+<span ng-include="'/javascripts/templates/admin-navbar.html'"></span>
+
 <div class="action-container">
     <a ng-click="createNew()" href="#/admin/products" ng-show="!isFormShown" class="btn btn-warning">Dodaj nowy produkt</a>
     <a ng-click="createNew()" href="#/admin/products" ng-show="isFormShown" class="btn btn-warning">Lista produktów</a>
@@ -12,7 +14,7 @@
     </tr>
     <tr ng-repeat="product in products">
         <td class="admin-product-image">
-            <img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}" class="img-responsive" /> 
+            <img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}" class="img-responsive" />
         </td>
         <td>{{ product.name }}</td>
         <td>{{ product.price / 100 }} PLN</td>

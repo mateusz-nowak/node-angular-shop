@@ -15,11 +15,15 @@ app.configure(function() {
     app.use(express.cookieParser());
     app.use(express.session({
         secret: 'secret-hash',
-        expires: new Date(Date.now() + 60 * 10000),
-        maxAge: 60*10000
+        expires: new Date(Date.now() + 3600),
+        maxAge: 3600
     }));
     app.use(passport.initialize());
     app.use(passport.session());
+    app.use(function(req, res, next) {
+        req.cartManager = require('./src/services/cartManager')(req);
+        next();
+    });
     app.use(app.router);
     app.use(require('less-middleware')({
         src: __dirname + '/src/assets/less',

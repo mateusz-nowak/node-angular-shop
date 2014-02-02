@@ -1,0 +1,30 @@
+<div ng-show="message" class="alert alert-warning">
+    {{ message }}
+</div>
+<table class='table'>
+    <thead>
+        <th></th>
+        <th>Produkt</th>
+        <th>Cena</th>
+        <th>Akcje</th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="product in products">
+            <td class="col-lg-1">
+               <img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}" class="img-responsive" />
+            </td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price / 100 }} PLN</td>
+            <td>
+                <a href="#/cart" ng-click="removeProduct(product)" class="btn btn-warning">Usuń</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="text--right">
+    <p class="lead">Cena sumaryczna: {{ totalPrice / 100 }}zł</p>
+    <div ng-show="products.length">
+        <a href="#/cart" class="btn btn-info" ng-click="order(products)">Złóż zamówienie</a>
+    </div>
+</div>

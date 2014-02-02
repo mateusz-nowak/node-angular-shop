@@ -1,0 +1,28 @@
+<span ng-include="'/javascripts/templates/admin-navbar.html'"></span>
+
+<table class='table table-bordered'>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nazwisko</th>
+            <th>Imię</th>
+            <th class="text--center">Zamówienie</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="order in orders">
+            <td>{{ order.id }}</td>
+            <td>{{ order.name }}</td>
+            <td>{{ order.surname }}</td>
+            <td>
+                <table class="table table-striped">
+                    <tr ng-repeat="product in order.products">
+                        <td>{{ product.id }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.price / 100 }}PLN</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

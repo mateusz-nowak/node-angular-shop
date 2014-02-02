@@ -2,7 +2,7 @@
     <p>{{ product.name }}</p>
     <small>szczególy produktu</small>
     <big class="btn btn-success pull-right text--right product-defail-price">
-        {{ product.price / 100 }} PLN
+product        {{ product.price / 100 }} PLN
     </big>
 </blockquote>
 <div class="clearfix"></div>
@@ -17,4 +17,4 @@
     <div class="clearfix"></div>
 </div>
 
-<a class="btn btn-primary" href="#/product/{{ product.id }}/cart">Dodaj do koszyka</a>
+<a ng-click="addToCart(product)" class="btn btn-primary" href="#/product/{{ product.id }}">Dodaj do koszyka</a>

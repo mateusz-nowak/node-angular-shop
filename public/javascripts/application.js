@@ -10,10 +10,18 @@ app.factory('CommonDataProvider', function($http) {
                 .success(function(categories) {
                     self.categories = categories;
                 });
-        },
-
+        }
     };
 });
+
+var redirectUnlessAdmin = function($http, $location) {
+    $http.get('/auth/admin')
+        .success(function(result) {
+            if (!result.isAdmin) {
+                $location.path('/not-logged');
+            }
+        });
+};
 
 app.controller('SidebarCategoryController', function($scope, $http, $location, CommonDataProvider) {
     CommonDataProvider
@@ -40,7 +48,14 @@ app.controller('ProductListController', function($scope, $routeParams, $http) {
         });
 });
 
-app.controller('ProductDetailController', function($scope, $routeParams, $http) {
+app.controller('ProductDetailController', function($scope, $routeParams, $http, $location) {
+    $scope.addToCart = function(product) {
+       $http.post('/cart', product)
+            .success(function(product) {
+                $location.path('/cart');
+            });
+    };
+
     $http.get('/products/' + $routeParams.id)
         .success(function(product) {
             $scope.product = product;
@@ -61,11 +76,13 @@ app.controller('MainController', function($scope, $http) {
         });
 });
 
-app.controller('AdminDashboardController', function($scope, $http) {
-    // Nothing yet here.
+app.controller('AdminDashboardController', function($scope, $http, CommonDataProvider, $location) {
+    redirectUnlessAdmin($http, $location);
 });
 
-app.controller('AdminCategoriesController', function($scope, $http, CommonDataProvider) {
+app.controller('AdminCategoriesController', function($scope, $http, CommonDataProvider, $location) {
+    redirectUnlessAdmin($http, $location);
+
     var loadCategories = function() {
         CommonDataProvider
             .fetchCategories()
@@ -98,7 +115,8 @@ app.controller('AdminCategoriesController', function($scope, $http, CommonDataPr
     };
 });
 
-app.controller('AdminProductsController', function($scope, $http) {
+app.controller('AdminProductsController', function($scope, $http, CommonDataProvider, $location) {
+    redirectUnlessAdmin($http, $location);
     $scope.isFormShown = false;
     $scope.products = [];
     $scope.categories = [];
@@ -138,6 +156,48 @@ app.controller('AdminProductsController', function($scope, $http) {
         });
 });
 
+app.controller('CartController', function($scope, $http, $location) {
+    var loadProducts = function() {
+        $http.get('/cart')
+            .success(function(products) {
+                $scope.products = products;
+                var total = 0;
+                products.forEach(function(product) {
+                    total += product.price;
+                });
+
+                $scope.totalPrice = total;
+            });
+    };
+
+    loadProducts();
+
+    $scope.removeProduct = function(product) {
+        $http.delete('/cart/' + product.id)
+            .success(function() {
+                loadProducts();
+            });
+    };
+
+    $scope.order = function() {
+        $http.post('/order')
+            .success(function() {
+                $location.path('/ordered');
+            })
+            .error(function() {
+                $scope.message = 'Zaloguj się, aby móc składać zamówienia.';
+            });
+    };
+});
+
+app.controller('AdminOrdersController', function($scope, $http, CommonDataProvider, $location) {
+    redirectUnlessAdmin($http, $location);
+    $http.get('/orders')
+        .success(function(orders) {
+            $scope.orders = orders;
+        });
+});
+
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
         when('/category/:id', {
@@ -163,6 +223,20 @@ app.config(['$routeProvider', function($routeProvider) {
         when('/admin/products', {
             templateUrl: 'javascripts/templates/admin-products.html',
             controller: 'AdminProductsController'
+        }).
+        when('/admin/orders', {
+            templateUrl: 'javascripts/templates/admin-orders.html',
+            controller: 'AdminOrdersController'
+        }).
+        when('/cart', {
+            templateUrl: 'javascripts/templates/cart.html',
+            controller: 'CartController'
+        }).
+        when('/ordered', {
+            templateUrl: 'javascripts/templates/ordered.html'
+        }).
+        when('/not-logged', {
+            templateUrl: 'javascripts/templates/not-logged.html'
         }).
         otherwise({
             templateUrl: 'javascripts/templates/main.html',
