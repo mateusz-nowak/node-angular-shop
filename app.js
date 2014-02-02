@@ -15,8 +15,8 @@ app.configure(function() {
     app.use(express.cookieParser());
     app.use(express.session({
         secret: 'secret-hash',
-        expires: new Date(Date.now() + 3600),
-        maxAge: 3600
+        expires: new Date(Date.now() + 360000),
+        maxAge: 360000
     }));
     app.use(passport.initialize());
     app.use(passport.session());
