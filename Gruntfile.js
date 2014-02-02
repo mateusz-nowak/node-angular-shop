@@ -1,18 +1,15 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        copyconfig: {
-            'database': 'db'
-        }
     });
 
-
-    grunt.registerTask('copyconfig', 'Building configuration from dist', function() {
-        grunt.log.writeln('Application version: ' + grunt.config('pkg.version')).ok();
+    grunt.registerTask('build-db', 'Building database from dump', function() {
+        grunt.log.writeln('Building database schema...');
     });
 
-    grunt.registerTask('builddb', 'Building database from dump', function() {
+    grunt.registerTask('fixtures', 'Run fixtures', function() {
+        grunt.log.writeln('Executing fixtures...');
     });
 
-    grunt.registerTask('default', ['copyconfig', 'builddb']);
+    grunt.registerTask('default', ['build-db', 'fixtures']);
 };
