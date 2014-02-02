@@ -63,7 +63,12 @@ app.controller('ProductDetailController', function($scope, $routeParams, $http, 
 });
 
 app.controller('ProductSearchController', function($scope, $routeParams, $http) {
-    $http.post('/products/search', JSON.parse(localStorage.getItem('searchProductProperties')))
+    var searchTerms = JSON.parse(localStorage.getItem('searchProductProperties'));
+
+    searchTerms.price.min *= 100;
+    searchTerms.price.max *= 100;
+
+    $http.post('/products/search', searchTerms)
         .success(function(products) {
             $scope.products = products;
         });
@@ -113,6 +118,33 @@ app.controller('AdminCategoriesController', function($scope, $http, CommonDataPr
                 $scope.category = {};
             });
     };
+});
+
+app.controller('AdminProductsEditController', function($scope, $http, $routeParams, CommonDataProvider, $location) {
+    redirectUnlessAdmin($http, $location);
+
+    $scope.editProduct = function(product) {
+        $http.put('/products', product)
+            .success(function(response) {
+                $location.path('/admin/products');
+            });
+    };
+    CommonDataProvider
+        .fetchCategories()
+        .then(function(categories) {
+            $scope.categories = CommonDataProvider.categories;
+        }).then(function() {
+            $http.get('/products/' + $routeParams.id)
+                .success(function(product) {
+                    $scope.categories.forEach(function(category) {
+                        if (category.id == product.category_id) {
+                            delete product.category_id;
+                            product.category = category;
+                        }
+                    });
+                    $scope.product = product;
+                });
+        });
 });
 
 app.controller('AdminProductsController', function($scope, $http, CommonDataProvider, $location) {
@@ -223,6 +255,10 @@ app.config(['$routeProvider', function($routeProvider) {
         when('/admin/products', {
             templateUrl: 'javascripts/templates/admin-products.html',
             controller: 'AdminProductsController'
+        }).
+        when('/admin/products/:id/edit', {
+            templateUrl: 'javascripts/templates/admin-products-edit.html',
+            controller: 'AdminProductsEditController'
         }).
         when('/admin/orders', {
             templateUrl: 'javascripts/templates/admin-orders.html',

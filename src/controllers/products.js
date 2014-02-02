@@ -5,6 +5,19 @@ module.exports.controller = function(app, mysql) {
         });
     });
 
+    app.put('/products', function(req, res) {
+        req.body.category_id = req.body.category.id;
+        req.body.price *= 100;
+        delete req.body.category;
+
+        mysql.query('UPDATE products SET ? WHERE id = ?', [ req.body, req.body.id ], function(err, result) {
+            if (err) {
+                return res.send(500, err);
+            }
+            res.send(200, result);
+        });
+    });
+
     app.post('/products', function(req, res) {
         var product = req.body;
 

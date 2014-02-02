@@ -1,31 +1,10 @@
 <span ng-include="'/javascripts/templates/admin-navbar.html'"></span>
 
 <div class="action-container">
-    <a ng-click="createNew()" href="#/admin/products" ng-show="!isFormShown" class="btn btn-warning">Dodaj nowy produkt</a>
-    <a ng-click="createNew()" href="#/admin/products" ng-show="isFormShown" class="btn btn-warning">Lista produktów</a>
+    <a ng-click="createNew()" href="#/admin/products" class="btn btn-warning">Lista produktów</a>
 </div>
 
-<table class="table" ng-show="!isFormShown">
-    <tr>
-        <th class="admin-product-image">#</th>
-        <th>Nazwa produktu</th>
-        <th>Cena</th>
-        <th class="text--right">Akcje</th>
-    </tr>
-    <tr ng-repeat="product in products">
-        <td class="admin-product-image">
-            <img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}" class="img-responsive" />
-        </td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.price / 100 }} PLN</td>
-        <td class="text--right">
-            <a href="#/admin/products/{{ product.id }}/edit" class="btn btn-primary">Edytuj</a>
-            <a ng-click="removeProduct(product)" class="btn btn-danger">Usuń</a>
-        </td>
-    </tr>
-</table>
-
-<div class="form-add-container col-lg-4" ng-show="isFormShown">
+<div class="form-add-container col-lg-4">
     <form method="POST" name="formAddProduct">
         <div class="form-group">
             <label for="product-name">Nazwa produktu</label>
@@ -49,9 +28,9 @@
         </div>
         <div class="form-group">
             <label for="product-price">Cena [PLN]</label>
-            <input ng-minlength="1" ng-pattern="/^\d+$/" id="product-price" name="productPrice" type="text" ng-model="product.price" class="form-control" required />
+            <input ng-pattern="/^\d+$/" id="product-price" name="productPrice" type="text" ng-model="product.price" class="form-control" required />
             <span class="form-error" ng-show="!formAddProduct.productPrice.$valid">Podaj kwotę</span>
         </div>
-        <button ng-click="postProduct()" ng-show="formAddProduct.$valid" type="submit" class="btn btn-default">Dodaj</button>
+        <button ng-click="editProduct(product)" ng-show="formAddProduct.$valid" type="submit" class="btn btn-default">Edytuj</button>
     </form>
 </div>
